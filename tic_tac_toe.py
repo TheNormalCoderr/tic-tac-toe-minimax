@@ -83,6 +83,7 @@ def Min_value(board, alpha=-1e9, beta=1e9):
             break
     return val
 
+# ================= function to play game with an AI =================
 def play_game(board):
     human_player = input("Choose one (X or O) : ")
 
@@ -134,6 +135,7 @@ def play_game(board):
     print(f"Resultant board : ")
     Print_board(board)
 
+# ================= funtion to let two AI's play the game =================
 def ai_vs_ai(board):
     while not Terminal(board):
         # Ai 1 logic 
@@ -180,4 +182,6 @@ def ai_vs_ai(board):
     print("Resultant board : ")
     Print_board(board)
 
-ai_vs_ai(board)
+# Call the functions here 
+# play_game(board)
+# ai_vs_ai(board)
