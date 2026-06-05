@@ -18,7 +18,7 @@ The core of this project is the **Minimax algorithm**, a decision-making strateg
 1. **Clone the repository:**
 Bash
 ```
-   git clone [https://github.com/ThNormalCoderr/tic-tac-toe-minimax.git](https://github.com/TheNormalCoderr/tic-tac-toe-minimax.git)
+   git clone https://github.com/TheNormalCoderr/tic-tac-toe-minimax.git
 ```
 2. **Navigate to the directory:**
 Bash
