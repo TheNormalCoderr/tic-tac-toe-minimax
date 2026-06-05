@@ -1,4 +1,5 @@
 import random 
+INF = 1e9
 
 board = [
     [' ', ' | ', ' ', ' | ', ' '],
@@ -7,7 +8,7 @@ board = [
     ['--', '-', '---', '-', '--'],
     [' ', ' | ', ' ', ' | ', ' '],
 ]
-    
+
 def Print_board(board):
     print()
     for i in range(len(board)):
@@ -56,11 +57,11 @@ def Result(board, action, player):
     board[row][col] = player
     return board
 
-def Max_value(board, alpha=-1e9, beta=1e9):
+def Max_value(board, alpha=-INF, beta=INF):
     player = 'X'
     if Terminal(board):
         return Utility(board)
-    val = -1e9
+    val = -INF
     for action in Actions(board):
         val = max(val, Min_value(Result([r[:] for r in board], action, player), alpha, beta))
 
@@ -70,11 +71,11 @@ def Max_value(board, alpha=-1e9, beta=1e9):
             break
     return val
 
-def Min_value(board, alpha=-1e9, beta=1e9):
+def Min_value(board, alpha=-INF, beta=INF):
     player = 'O'
     if Terminal(board):
         return Utility(board)
-    val = 1e9
+    val = INF
     for action in Actions(board):
         val = min(val, Max_value(Result([r[:] for r in board], action, player), alpha, beta))
 
@@ -105,11 +106,11 @@ def play_game(board):
 
         if player1 == 'X':
             player2 = 'O'
-            best_val = 1e9
+            best_val = INF
             best_mov = None
 
             for action in Actions(board):
-                mov_val = Max_value(Result([r[:] for r in board], action, player2), -1e9, 1e9)
+                mov_val = Max_value(Result([r[:] for r in board], action, player2), -INF, INF)
                 if mov_val < best_val:
                     best_val = mov_val
                     best_mov = action
@@ -119,11 +120,11 @@ def play_game(board):
             
         else:
             player2 = 'X'
-            best_val = -1e9
+            best_val = -INF
             best_mov = None
 
             for action in Actions(board):
-                mov_val = Min_value(Result([r[:] for r in board], action, player2), -1e9, 1e9)
+                mov_val = Min_value(Result([r[:] for r in board], action, player2), -INF, INF)
                 if mov_val > best_val:
                     best_val = mov_val
                     best_mov = action
@@ -141,15 +142,15 @@ def ai_vs_ai(board):
         # Ai 1 logic 
         player1 = 'X'
 
-        print("Ai 1 is thinking ...\n")
-        player1_best_val = 1e9
+        print("Ai 1 (X) is thinking ...\n")
+        player1_best_val = -INF
         player1_best_moves = []
 
         for action in Actions(board):
-            player1_mov_val = Max_value(Result([r[:] for r in board], action, player1), -1e9, 1e9)
+            player1_mov_val = Min_value(Result([r[:] for r in board], action, player1), -INF, INF)
             if player1_mov_val == player1_best_val:
                 player1_best_moves.append(action)
-            elif player1_mov_val < player1_best_val:
+            elif player1_mov_val > player1_best_val:
                 player1_best_val = player1_mov_val
                 player1_best_moves = [action]
         
@@ -162,15 +163,15 @@ def ai_vs_ai(board):
         # Ai 2 logic 
         player2 = 'O'
 
-        print("Ai 2 is thinking ...\n")
-        player2_best_val = -1e9
+        print("Ai 2 (O) is thinking ...\n")
+        player2_best_val = INF
         player2_best_moves = []
 
         for action in Actions(board):
-            player2_mov_val = Min_value(Result([r[:] for r in board], action, player2), -1e9, 1e9)
+            player2_mov_val = Max_value(Result([r[:] for r in board], action, player2), -INF, INF)
             if player2_mov_val == player2_best_val:
                 player2_best_moves.append(action)
-            elif player2_mov_val > player2_best_val:
+            elif player2_mov_val < player2_best_val:
                 player2_best_val = player2_mov_val
                 player2_best_moves = [action]
 
